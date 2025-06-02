@@ -15,6 +15,10 @@ class ChatController extends IChatController with ChangeNotifier {
     return _chatService.messagesStream(chatId);
   }
 
+  Stream<ChatMessage?> getLastMessage(String chatId) {
+    return _chatService.getLastMessage(chatId);
+  }
+
   @override
   Future<ChatMessage?> save(String text, ChatUser user, String chatId) async {
     final message = await _chatService.save(text, user, chatId);

@@ -18,6 +18,10 @@ class ChatService extends IChatService {
     return message;
   }
 
+  Stream<ChatMessage?> getLastMessage(String chatId) {
+    return chatRepository.lastMessage(chatId);
+  }
+
   @override
   Stream<List<ChatMessage>> messagesStream(
     String chatId,

@@ -19,11 +19,26 @@ class ChatRepository extends IChatRepository {
     return snapshots.map((event) => event.docs.map((e) => e.data()).toList());
   }
 
-  static Map<String, dynamic> _toFirestore(
-      //TODO: Verificar de deixo a responsabilidade de conversão na service.
+  Stream<ChatMessage?> lastMessage(String chatId) {
+    final snapshots = store
+        .collection(CHAT_COLLECTION)
+        .doc(chatId)
+        .collection(MESSAGES_COLLECTION)
+        .withConverter(fromFirestore: _fromFirestore, toFirestore: _toFirestore)
+        .orderBy('createdAt', descending: true)
+        .limit(1)
+        .snapshots();
 
-      ChatMessage msg,
-      SetOptions? options) {
+    return snapshots.map((event) {
+      if (event.docs.isNotEmpty) {
+        return event.docs.first.data();
+      }
+      return null;
+    });
+  }
+
+  static Map<String, dynamic> _toFirestore(
+      ChatMessage msg, SetOptions? options) {
     return {
       'text': msg.text,
       'createdAt': msg.createdAt.toIso8601String(),
@@ -34,11 +49,7 @@ class ChatRepository extends IChatRepository {
   }
 
   static ChatMessage _fromFirestore(
-      //TODO:
-      // Verificar de deixo a responsabilidade de conversão na service.
-
-      DocumentSnapshot<Map<String, dynamic>> msg,
-      SnapshotOptions? options) {
+      DocumentSnapshot<Map<String, dynamic>> msg, SnapshotOptions? options) {
     return ChatMessage(
       id: msg.id,
       text: msg['text'],
