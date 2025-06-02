@@ -66,11 +66,9 @@ class _ContactItemState extends State<ContactItem> {
               if (snapshot.data!.createdAt.day == now.day &&
                   snapshot.data!.createdAt.month == now.month &&
                   snapshot.data!.createdAt.year == now.year) {
-                lastMessageDate =
-                    '${snapshot.data!.createdAt.hour.toString().padLeft(2, '0')}:${snapshot.data!.createdAt.minute.toString().padLeft(2, '0')}';
+                lastMessageDate = snapshot.data!.time;
               } else {
-                lastMessageDate =
-                    '${snapshot.data!.createdAt.day}/${snapshot.data!.createdAt.month}/${snapshot.data!.createdAt.year}';
+                lastMessageDate = snapshot.data!.date;
               }
 
               if (snapshot.data?.userId == widget.contactId) {
@@ -83,7 +81,16 @@ class _ContactItemState extends State<ContactItem> {
             return ListTile(
               key: const Key('contact_item'),
               title: Row(
-                children: [Text(user.name), Spacer(), Text(lastMessageDate)],
+                children: [
+                  Text(user.name),
+                  Spacer(),
+                  Text(
+                    lastMessageDate,
+                    style: const TextStyle(
+                      color: Colors.grey,
+                    ),
+                  )
+                ],
               ),
               enableFeedback: true,
               subtitle: Text(
