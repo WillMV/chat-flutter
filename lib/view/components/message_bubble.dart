@@ -5,9 +5,13 @@ import 'package:flutter/material.dart';
 class MessageBubble extends StatelessWidget {
   final ChatMessage message;
   final bool belongsCurrentUser;
+  final ChatMessage? prevousMessage;
+  final bool isGroup;
 
   const MessageBubble({
     super.key,
+    this.prevousMessage,
+    this.isGroup = false,
     required this.message,
     required this.belongsCurrentUser,
   });
@@ -41,10 +45,12 @@ class MessageBubble extends StatelessWidget {
                 ? CrossAxisAlignment.end
                 : CrossAxisAlignment.start,
             children: [
-              Row(
-                children:
-                    belongsCurrentUser ? userInfo.reversed.toList() : userInfo,
-              ),
+              if (prevousMessage?.userId != message.userId && isGroup)
+                Row(
+                  children: belongsCurrentUser
+                      ? userInfo.reversed.toList()
+                      : userInfo,
+                ),
               const SizedBox(
                 height: 5,
               ),

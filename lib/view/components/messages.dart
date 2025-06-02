@@ -37,7 +37,7 @@ class Messages extends StatelessWidget {
           );
         } else {
           return const Center(
-            child: Text('Vácuo..'),
+            child: Text('Vácuo...'),
           );
         }
       },
