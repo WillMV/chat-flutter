@@ -23,8 +23,8 @@ class AuthFormData {
 
   String? validateName(String? value) {
     final name = value ?? '';
-    if (name.isEmpty || name.length < 5) {
-      return 'O nome deve ter ao menos 5 caracteres';
+    if (name.isEmpty || name.length < 4) {
+      return 'O apelido deve ter ao menos 4 caracteres';
     } else {
       return null;
     }

@@ -5,9 +5,11 @@ import 'package:provider/provider.dart';
 class InputNameValidator extends StatefulWidget {
   final TextEditingController name;
   final void Function(bool isValid) isValidated;
+  final String? Function(String?)? validator;
 
   const InputNameValidator({
     super.key,
+    this.validator,
     required this.name,
     required this.isValidated,
   });
@@ -32,12 +34,10 @@ class _InputNicknameValidatorState extends State<InputNameValidator> {
   @override
   Widget build(BuildContext context) {
     final userController = Provider.of<UserController>(context);
-    return TextField(
-      key: const ValueKey('name_validator'),
-      onChanged: (_) {
-        setState(() {});
-      },
+    return TextFormField(
+      key: widget.key,
       controller: widget.name,
+      validator: widget.validator,
       decoration: InputDecoration(
         label: const Text('Apelido'),
         suffixIcon: FutureBuilder(

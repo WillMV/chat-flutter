@@ -47,8 +47,10 @@ class _AuthFormState extends State<AuthForm> {
           child: Column(children: [
             if (_formData.isSigup) ...[
               InputNameValidator(
+                key: const ValueKey('name'),
                 name: _formData.nameController,
                 isValidated: isValidName,
+                validator: (value) => _formData.validateName(value),
               )
             ],
             TextFormField(
@@ -77,8 +79,8 @@ class _AuthFormState extends State<AuthForm> {
               key: const Key('submit_button'),
               onPressed: () => _submit(authController),
               style: ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(theme.primaryColor),
-                shape: MaterialStatePropertyAll(
+                backgroundColor: WidgetStatePropertyAll(theme.primaryColor),
+                shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),

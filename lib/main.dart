@@ -15,6 +15,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:toastification/toastification.dart';
 
 void main() {
   runApp(DevicePreview(
@@ -60,12 +61,14 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ],
-      child: MaterialApp(
-        theme: ThemeData(
-          primaryColor: Colors.blue,
-          useMaterial3: true,
+      child: ToastificationWrapper(
+        child: MaterialApp(
+          theme: ThemeData(
+            primaryColor: Colors.blue,
+            useMaterial3: true,
+          ),
+          home: const AuthOrAppPage(),
         ),
-        home: const AuthOrAppPage(),
       ),
     );
   }
