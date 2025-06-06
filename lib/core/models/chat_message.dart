@@ -21,7 +21,7 @@ class ChatMessage {
   }
 
   String get date {
-    return '${createdAt.day}/${createdAt.month}/${createdAt.year}';
+    return '${createdAt.day.toString().padLeft(2, '0')}/${createdAt.month.toString().padLeft(2, '0')}/${createdAt.year}';
   }
 
   String get month {
